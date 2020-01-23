@@ -111,6 +111,7 @@ export default new Vuex.Store({
         member: localStorage.getItem('currentUser')
       })
         .then(() => {
+          context.dispatch('watchRoom', payload)
           router.push('/play')
         })
     }
