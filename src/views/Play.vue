@@ -1,7 +1,8 @@
 <template>
   <div>
-    <h1>Play</h1>
     <div class="battlefield">
+      <h1>Play</h1>
+      <h1>{{board}}</h1>
       <div v-for="(item, index) in generateBoard()" :key="index" class="item">
         <input type="checkbox" :name="item" :id="index" class="ship" @click="clickCoor">
       </div>
@@ -41,6 +42,10 @@ export default {
         }
       }
       return result
+    },
+  computed: {
+    board () {
+      return this.$store.state.room.board
     }
   }
 }

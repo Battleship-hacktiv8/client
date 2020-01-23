@@ -18,6 +18,7 @@ export default {
   },
   methods: {
     toRoom () {
+      localStorage.setItem('currentUser', this.name)
       this.$router.push('/room')
     }
   }
