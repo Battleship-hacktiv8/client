@@ -1,18 +1,25 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <form @submit="toRoom">
+      <label for="name">Insert your name:</label>
+      <input type="text" name="name" id="name" v-model="name">
+      <input type="submit" value="Go!!!">
+    </form>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
   name: 'home',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      name: ''
+    }
+  },
+  methods: {
+    toRoom () {
+      this.$router.push('/room')
+    }
   }
 }
 </script>
