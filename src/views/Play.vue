@@ -9,13 +9,13 @@
         </div> -->
         <div id="container">
           <div class="mb-3">
-            <h2 class="display-4">{{room.turn}}</h2>
+            <h2 class="display-4">{{room.turn}}'s turn</h2>
           </div>
           <div v-if="!isWinner">
             <div v-if="board" class="battlefield">
               <div v-for="(row, i) in board" :key="i" class="row">
                 <div v-for="(col, j) in row" :key="j" class="col align-items-center justify-content-center">
-                  <input :id="`${i}${j}`" type="checkbox" class="ship" @click="shoot([i,j])" :disabled="col === '*' || col === 'W' || currentUser !== room.turn" :checked="col === '*'">
+                  <input :id="`${i}${j}`" type="input" :value="col === '*' ? 'X' : ''" class="ship form-control" @click="shoot([i,j])" :disabled="col === '*' || col === 'W' || currentUser !== room.turn" :checked="col === '*'" style="cursor:pointer">
                 </div>
                 <br/>
               </div>
@@ -26,32 +26,18 @@
           </div>
         </div>
       </div>
-<<<<<<< HEAD
       <div v-if="$store.state.room.winner" class="position-fixed flex-col justify-content-center align-item-center" id="winner-div">
-        <div v-show="$store.state.room.winner == myName" class="message-win">
-          <h1>YOU WIN !!</h1>
+        <div v-show="$store.state.room.winner == myName" class="message-win ">
+          <h1 class="text-dark">YOU WIN !!</h1>
           <button @click="deleteRoom">Delete room</button>
         </div>
         <div v-show="$store.state.room.winner != myName" class="message-win">
           <h1>YOU LOSE</h1>
-          <router-link to='/room'>Back to home</router-link>
+          <router-link to='/room'>Back to rooms</router-link>
         </div>
       </div>
+      {{board}}
     </div>
-=======
-    </div>
-    <div v-if="$store.state.room.winner" class="position-fixed flex-col justify-content-center align-item-center" id="winner-div">
-      <div v-show="$store.state.room.winner == myName" class="message-win">
-        <h1>YOU WIN !!</h1>
-        <button class="btn btn-primary m-2" @click="deleteRoom">Play Again?</button>
-      </div>
-      <div v-show="$store.state.room.winner != myName" class="message-win">
-        <h1>YOU LOSE</h1>
-        <router-link class="btn btn-primary m-2" to='/room'>Play Again?</router-link>
-      </div>
-    </div>
-    {{board}}
->>>>>>> add fitur back to room and delete room
   </div>
 </template>
 
@@ -93,12 +79,12 @@ export default {
       //   return this.localBoard
       // }
     },
-    isWinner () {
-      if (this.room.winner === localStorage.getItem('currentUser')) {
-        console.log(this.room.winner)
-        return true
-      } return false
-    },
+    // isWinner () {
+    //   if (this.room.winner === localStorage.getItem('currentUser')) {
+    //     console.log(this.room.winner)
+    //     return true
+    //   } return false
+    // },
     roomId () {
       return this.$store.state.room.id
     },
@@ -255,5 +241,17 @@ export default {
     margin: 0 auto 5vw;
     border: 2px solid;
     z-index: 1;
+  }
+  .win-only{
+    background-image: url('https://animetree.files.wordpress.com/2013/11/kantai-collection-1.jpg?w=1038&h=576&crop=1');
+    background-size: cover;
+    top: 0;
+    height: 100vh !important;
+    position : relative;
+  }
+  .win-only h1 {
+    top: 100px;
+    position : absolute;
+    margin-top: 50vh  !important;;
   }
 </style>
