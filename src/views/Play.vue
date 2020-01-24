@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="position-relative">
     <div class="battlefield">
       <!-- <h1>Play</h1>
       <h1>{{board}}</h1> -->
@@ -16,9 +16,18 @@
         </div>
       </div>
     </div>
+    <div v-if="$store.state.room.winner" class="position-fixed flex-col justify-content-center align-item-center" id="winner-div">
+      <div v-show="$store.state.room.winner == myName" class="message-win">
+        <h1>YOU WIN !!</h1>
+        <button class="btn btn-primary m-2">Play Again?</button>
+      </div>
+      <div v-show="$store.state.room.winner != myName" class="message-win">
+        <h1>YOU LOSE</h1>
+        <button class="btn btn-primary m-2">Play Again?</button>
+      </div>
+    </div>
     <h1>Play</h1>
     {{board}}
-    <button @click="shoot([0,3])">btn</button>
   </div>
 </template>
 
@@ -27,6 +36,7 @@ export default {
   name: 'play',
   data () {
     return {
+      myName: localStorage.getItem('currentUser'),
       localBoard: [
         ['a1', 'a2', 'a3', 'a4', 'a5'],
         ['b1', 'b2', 'b3', 'b4', 'b5'],
@@ -37,6 +47,13 @@ export default {
     }
   },
   computed: {
+    winner () {
+      if (this.$store.state.room.winner) {
+        return this.$store.state.room.winner
+      } else {
+        return false
+      }
+    },
     board () {
       if (this.$store.state.room) {
         console.log(this.$store.state.room)
@@ -122,6 +139,17 @@ export default {
 </script>
 
 <style>
+  .message-win {
+    position: relative;
+    top: 50%
+  }
+  #winner-div {
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(211, 196, 196, 0.82);
+    z-index: 999;
+  }
   .battlefield {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
