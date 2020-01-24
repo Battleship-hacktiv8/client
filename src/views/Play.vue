@@ -29,11 +29,11 @@
       <div v-if="$store.state.room.winner" class="position-fixed flex-col justify-content-center align-item-center" id="winner-div">
         <div v-show="$store.state.room.winner == myName" class="message-win">
           <h1>YOU WIN !!</h1>
-          <button class="btn btn-primary m-2">Play Again?</button>
+          <button @click="deleteRoom">Delete room</button>
         </div>
         <div v-show="$store.state.room.winner != myName" class="message-win">
           <h1>YOU LOSE</h1>
-          <button class="btn btn-primary m-2">Play Again?</button>
+          <router-link to='/room'>Back to home</router-link>
         </div>
       </div>
     </div>
@@ -77,6 +77,12 @@ export default {
       // } else {
       //   return this.localBoard
       // }
+    },
+    isWinner () {
+      if (this.room.winner === localStorage.getItem('currentUser')) {
+        console.log(this.room.winner)
+        return true
+      } return false
     },
     roomId () {
       return this.$store.state.room.id
@@ -144,6 +150,11 @@ export default {
           board: JSON.stringify(this.board),
           turn: updateTurn
         })
+      }
+    },
+    deleteRoom () {
+      if (this.$store.dispatch('deleteRoom', this.roomId)) {
+        this.$router.replace('/room')
       }
     }
   }

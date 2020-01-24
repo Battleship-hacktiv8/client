@@ -132,6 +132,10 @@ export default new Vuex.Store({
         .update({
           winner: payload.user
         })
+    },
+    async deleteRoom ({ commit }, payload) {
+      const collection = db.collection('battleship').doc(payload)
+      await collection.delete()
     }
   },
   modules: {
