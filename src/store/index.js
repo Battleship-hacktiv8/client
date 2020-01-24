@@ -10,7 +10,8 @@ export default new Vuex.Store({
     board: null,
     rooms: [],
     waiting: false,
-    room: null
+    room: null,
+    themeSong: new Audio(require('../assets/theme.mp3'))
   },
   mutations: {
     CHANGEBOARD (state, payload) {

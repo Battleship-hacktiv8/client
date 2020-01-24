@@ -9,7 +9,7 @@
         </div> -->
         <div id="container">
           <div class="mb-3">
-            <h2 class="display-4">{{room.turn}}'s turn</h2>
+            <h3>{{room.turn}}'s turn</h3>
           </div>
           <div v-if="!isWinner">
             <div v-if="board" class="battlefield">
@@ -35,7 +35,7 @@
         <div v-show="$store.state.room.winner != myName" class="message-win">
           <img src="https://media.giphy.com/media/hGjse6hh37kU8/giphy.gif">
           <h1>YOU LOSE</h1>
-          <router-link to='/room' class="btn btn-primary">Back to rooms</router-link>
+          <router-link to='/room' @click="stopSound" class="btn btn-primary">Back to rooms</router-link>
         </div>
       </div>
     </div>
@@ -108,25 +108,26 @@ export default {
     //   }
     // }
   },
+  mounted () {
+    this.$store.state.themeSong.play()
+  },
   methods: {
-    clickCoor (event, payload) {
-      console.log(event, payload)
-      // event.target.disabled = true
-      // if (event.target.value) {
-      //   console.log(`You hit ${event.target.name}`)
-      // }
-    },
     shoot (coordinate) {
       const result = this.board[coordinate[0]][coordinate[1]]
       if (result === 'B') {
+        let sound = require('../assets/explosion.mp3')
+        let audio = new Audio(sound)
+        audio.play()
         this.board[coordinate[0]][coordinate[1]] = 'W'
-        console.log('winner')
         this.$store.dispatch('winner', {
           user: localStorage.getItem('currentUser'),
           roomId: this.roomId
         })
         this.isWinner = true
       } else {
+        let miss = require('../assets/splash.wav')
+        let missSfx = new Audio(miss)
+        missSfx.play()
         const master = this.room.master
         const member = this.room.member
         const turn = this.room.turn
