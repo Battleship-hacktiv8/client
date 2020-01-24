@@ -87,9 +87,6 @@ export default new Vuex.Store({
         .then(docRef => {
           context.dispatch('watchRoom', docRef.id)
         })
-        .catch(err => {
-          console.log(err)
-        })
     },
     watchRoom (context, payload) {
       db.collection('battleship').doc(payload).onSnapshot(querySnapshot => {

@@ -69,7 +69,6 @@ export default {
     },
     board () {
       if (this.$store.state.room) {
-        console.log(this.$store.state.room)
         return JSON.parse(this.$store.state.room.board)
       } else {
         return []
