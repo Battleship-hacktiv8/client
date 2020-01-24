@@ -15,15 +15,15 @@
           </b-row>
           <b-row v-for="room in rooms" :key="room.id">
             <b-col cols="6" class="border-right py-3">{{room.name}}</b-col>
-            <b-col cols="6" class="py-3"><b-button block size="sm" variant="primary" v-if="!room.member" @click="joinRoom(room.id)"> Join Room </b-button><b-button block v-if="room.member" size="sm" disabled variant="success">Playing...</b-button></b-col>
+            <b-col cols="6" class="py-3"><b-button block size="sm" variant="primary" v-if="!room.member" @click="joinRoom(room.id)"> Join Room </b-button><b-button block v-if="room.member" size="sm" disabled variant="success"><b-spinner small type="grow"></b-spinner> Playing...</b-button></b-col>
           </b-row>
         </div>
         <div class="pb-3"></div>
         <b-modal id="modal-newroom" title="Create Room" hide-footer>
-          <form>
+          <form @submit.prevent="createRoom">
               <div class="form-group">
                   <label for="inputRoom">Room Name:</label>
-                  <input type="text" class="form-control" id="inputRoom" placeholder="Room Name" v-model="newRoom">
+                  <input type="text" class="form-control" id="inputRoom" placeholder="Room Name" v-model="newRoom" required>
               </div>
               <div>
                 <b-button variant="light" v-on:click.prevent="clear" @click="$bvModal.hide('modal-newroom')">Cancel</b-button>
@@ -75,6 +75,7 @@ export default {
       this.$store.dispatch('createRoom', this.newRoom)
     },
     start () {
+      this.$store.commit('SET_WAITING_FALSE')
       this.$router.push('/play')
     }
   },
@@ -104,7 +105,8 @@ export default {
   background-size: cover
 }
 #container {
-  width: 32vw;
+  width: 35vw;
+  min-width: 400px;
   background-color: rgba(255, 255, 255, 0.849);
   border-radius: 30px;
 }

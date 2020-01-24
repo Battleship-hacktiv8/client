@@ -3,7 +3,7 @@
     <form @submit="toRoom" id="form-name" class="p-4">
       <div class="form-group">
         <label for="name">Insert your name:</label>
-        <input type="text" class="form-control" id="name" v-model="name">
+        <input type="text" class="form-control" id="name" v-model="name" required>
         <small class="form-text text-muted">We'll never share your name with anyone else.</small>
       </div>
       <!-- <label for="name">Insert your name:</label>

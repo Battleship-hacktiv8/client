@@ -27,16 +27,17 @@
         </div>
       </div>
       <div v-if="$store.state.room.winner" class="position-fixed flex-col justify-content-center align-item-center" id="winner-div">
-        <div v-show="$store.state.room.winner == myName" class="message-win ">
+        <div v-show="$store.state.room.winner == myName" class="message-win">
+          <img src="https://media.giphy.com/media/hGjse6hh37kU8/giphy.gif">
           <h1 class="text-dark">YOU WIN !!</h1>
-          <button @click="deleteRoom">Delete room</button>
+          <button @click="deleteRoom" class="btn btn-danger">Delete room</button>
         </div>
         <div v-show="$store.state.room.winner != myName" class="message-win">
+          <img src="https://media.giphy.com/media/hGjse6hh37kU8/giphy.gif">
           <h1>YOU LOSE</h1>
-          <router-link to='/room'>Back to rooms</router-link>
+          <router-link to='/room' class="btn btn-primary">Back to rooms</router-link>
         </div>
       </div>
-      {{board}}
     </div>
   </div>
 </template>
@@ -164,7 +165,7 @@ export default {
 <style>
   .message-win {
     position: relative;
-    top: 50%
+    top: 25%;
   }
   #winner-div {
     top: 0;
