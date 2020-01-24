@@ -10,7 +10,7 @@ export default new Vuex.Store({
     board: null,
     rooms: [],
     waiting: false,
-    room: {}
+    room: null
   },
   mutations: {
     CHANGEBOARD (state, payload) {
@@ -76,7 +76,7 @@ export default new Vuex.Store({
         name: payload,
         board: JSON.stringify(board),
         master: localStorage.getItem('currentUser'),
-        turn: 'master',
+        turn: localStorage.getItem('currentUser'),
         member: ''
       })
         .then(docRef => {
