@@ -10,7 +10,7 @@ export default new Vuex.Store({
     board: null,
     rooms: [],
     waiting: false,
-    room: {}
+    room: null
   },
   mutations: {
     CHANGEBOARD (state, payload) {
@@ -76,7 +76,7 @@ export default new Vuex.Store({
         name: payload,
         board: JSON.stringify(board),
         master: localStorage.getItem('currentUser'),
-        turn: 'master',
+        turn: localStorage.getItem('currentUser'),
         member: ''
       })
         .then(docRef => {
@@ -89,7 +89,10 @@ export default new Vuex.Store({
     },
     watchRoom (context, payload) {
       db.collection('battleship').doc(payload).onSnapshot(querySnapshot => {
-        context.commit('SET_ROOM', querySnapshot.data())
+        context.commit('SET_ROOM', {
+          id: querySnapshot.id,
+          ...querySnapshot.data()
+        })
       })
     },
     fetchRooms (context) {
@@ -113,6 +116,21 @@ export default new Vuex.Store({
         .then(() => {
           context.dispatch('watchRoom', payload)
           router.push('/play')
+        })
+    },
+    shoot ({ commit }, payload) {
+      const collection = db.collection('battleship').doc(payload.roomId)
+      collection
+        .update({
+          board: payload.board,
+          turn: payload.turn
+        })
+    },
+    winner ({ commit }, payload) {
+      const collection = db.collection('battleship').doc(payload.roomId)
+      collection
+        .update({
+          winner: payload.user
         })
     }
   },
