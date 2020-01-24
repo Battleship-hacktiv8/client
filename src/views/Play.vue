@@ -1,47 +1,42 @@
 <template>
   <div class="position-relative">
-  <div id="landing">
-    <div class="jumbotron jumbotron-fluid bg-transparent">
-      <!-- <h1>Play</h1>
-      <h1>{{board}}</h1> -->
-      <!-- <div v-for="(item, index) in generateBoard" :key="index" class="item">
-        <input type="checkbox" :name="item" :id="index" class="ship" @click="clickCoor(index)">
-      </div> -->
-      <div id="container">
-        <div class="mb-3">
-          <h2 class="display-4">{{room.turn}}</h2>
-        </div>
-        <div v-if="!isWinner">
-          <div v-if="board" class="battlefield">
-            <div v-for="(row, i) in board" :key="i" class="row">
-              <div v-for="(col, j) in row" :key="j" class="col align-items-center justify-content-center">
-                <input :id="`${i}${j}`" type="checkbox" class="ship" @click="shoot([i,j])" :disabled="col === '*' || col === 'W' || currentUser !== room.turn" :checked="col === '*'">
+    <div id="landing">
+      <div class="jumbotron jumbotron-fluid bg-transparent">
+        <!-- <h1>Play</h1>
+        <h1>{{board}}</h1> -->
+        <!-- <div v-for="(item, index) in generateBoard" :key="index" class="item">
+          <input type="checkbox" :name="item" :id="index" class="ship" @click="clickCoor(index)">
+        </div> -->
+        <div id="container">
+          <div class="mb-3">
+            <h2 class="display-4">{{room.turn}}</h2>
+          </div>
+          <div v-if="!isWinner">
+            <div v-if="board" class="battlefield">
+              <div v-for="(row, i) in board" :key="i" class="row">
+                <div v-for="(col, j) in row" :key="j" class="col align-items-center justify-content-center">
+                  <input :id="`${i}${j}`" type="checkbox" class="ship" @click="shoot([i,j])" :disabled="col === '*' || col === 'W' || currentUser !== room.turn" :checked="col === '*'">
+                </div>
+                <br/>
               </div>
-              <br/>
             </div>
           </div>
-        </div>
-        <div v-if="isWinner">
-          <p>{{room.turn}} Wins!</p>
+          <div v-if="isWinner">
+            <p>{{room.turn}} Wins!</p>
+          </div>
         </div>
       </div>
-      <h1>Play</h1>
-      {{board}}
-      <button @click="shoot([0,3])">btn</button>
-    </div>
-    <div v-if="$store.state.room.winner" class="position-fixed flex-col justify-content-center align-item-center" id="winner-div">
-      <div v-show="$store.state.room.winner == myName" class="message-win">
-        <h1>YOU WIN !!</h1>
-        <button class="btn btn-primary m-2">Play Again?</button>
-      </div>
-      <div v-show="$store.state.room.winner != myName" class="message-win">
-        <h1>YOU LOSE</h1>
-        <button class="btn btn-primary m-2">Play Again?</button>
+      <div v-if="$store.state.room.winner" class="position-fixed flex-col justify-content-center align-item-center" id="winner-div">
+        <div v-show="$store.state.room.winner == myName" class="message-win">
+          <h1>YOU WIN !!</h1>
+          <button class="btn btn-primary m-2">Play Again?</button>
+        </div>
+        <div v-show="$store.state.room.winner != myName" class="message-win">
+          <h1>YOU LOSE</h1>
+          <button class="btn btn-primary m-2">Play Again?</button>
+        </div>
       </div>
     </div>
-    <h1>Play</h1>
-    {{board}}
-  </div>
   </div>
 </template>
 
@@ -156,7 +151,6 @@ export default {
 </script>
 
 <style>
-<<<<<<< HEAD
   .message-win {
     position: relative;
     top: 50%
@@ -168,8 +162,6 @@ export default {
     background-color: rgba(211, 196, 196, 0.82);
     z-index: 999;
   }
-  .battlefield {
-=======
   #landing {
     background-image: url('https://images.cgmagonline.com/wp-content/uploads/2018/02/world-of-warships-blitz-review-12-1280x720.jpg');
     background-size: cover;
@@ -183,7 +175,6 @@ export default {
     margin: 0 auto;
   }
   /* .battlefield {
->>>>>>> minor fix background
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     width: 300px;
