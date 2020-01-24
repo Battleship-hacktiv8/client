@@ -28,6 +28,7 @@ export default new Vuex.Store({
   },
   actions: {
     createRoom (context, payload) {
+      context.commit('SET_WAITING')
       let board = [
         ['', '', '', '', ''],
         ['', '', '', '', ''],
@@ -85,7 +86,6 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
-      context.commit('SET_WAITING')
     },
     watchRoom (context, payload) {
       db.collection('battleship').doc(payload).onSnapshot(querySnapshot => {

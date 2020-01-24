@@ -10,6 +10,9 @@
           <b-col cols="6"><b-button size="sm" pill variant="outline-success" v-b-modal.modal-newroom><i class="fas fa-plus-circle"></i> Create Room</b-button></b-col>
         </b-row>
         <div class="container" id="scrollable">
+          <b-row v-if="!$store.state.rooms[0]" id="fetchingRoom" align-v="center">
+            <b-spinner variant="primary"></b-spinner>
+          </b-row>
           <b-row v-for="room in rooms" :key="room.id">
             <b-col cols="6" class="border-right py-3">{{room.name}}</b-col>
             <b-col cols="6" class="py-3"><b-button block size="sm" variant="primary" v-if="!room.member" @click="joinRoom(room.id)"> Join Room </b-button><b-button block v-if="room.member" size="sm" disabled variant="success">Playing...</b-button></b-col>
@@ -30,9 +33,24 @@
         </b-modal>
       </div>
       <div v-if="$store.state.waiting">
-        <h1>Waiting for other player...</h1>
+        <div v-if="!$store.state.room.member">
+          <b-col cols="12" class="pt-4" align-h="center">
+            <h2>Waiting for other player...</h2>
+          </b-col>
+          <b-col cols="12" class="pb-4 pt-2">
+            <b-button variant="primary" disabled v-if="!$store.state.room.member">
+              <b-spinner small></b-spinner>
+              Loading...
+            </b-button>
+          </b-col>
+        </div>
         <div v-if="$store.state.room.member">
-          <button class="btn btn-primary" @click="start">Start</button>
+          <b-col cols="12" class="pt-4" align-h="center">
+            <h2>Ready to play!</h2>
+          </b-col>
+          <b-col cols="12" class="pb-4 pt-2">
+            <b-button variant="success" @click="start" v-if="$store.state.room.member">Start Game!</b-button>
+          </b-col>
         </div>
       </div>
     </div>
@@ -72,6 +90,11 @@ export default {
 </script>
 
 <style scoped>
+#fetchingRoom {
+  height: 100%;
+  justify-content: center;
+}
+
 #background {
   background-image: url("https://images.cgmagonline.com/wp-content/uploads/2018/02/world-of-warships-blitz-review-12-1280x720.jpg");
   position: absolute;
