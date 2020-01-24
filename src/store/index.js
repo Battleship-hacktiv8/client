@@ -139,7 +139,6 @@ export default new Vuex.Store({
     async deleteRoom ({ commit }, payload) {
       const collection = db.collection('battleship').doc(payload)
       await collection.delete()
-      commit('SET_WAITING_FALSE')
     }
   },
   modules: {
