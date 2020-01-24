@@ -3,10 +3,13 @@
     <div class="battlefield">
       <!-- <h1>Play</h1>
       <h1>{{board}}</h1> -->
-      <div v-for="(item, index) in generateBoard()" :key="index" class="item">
+      <div v-for="(item, index) in board" :key="index" class="item">
         <input type="checkbox" :name="item" :id="index" class="ship" @click="clickCoor">
       </div>
     </div>
+    <h1>Play</h1>
+    <h1>{{board}}</h1>
+    <button @click="shoot([0,3])">btn</button>
   </div>
 </template>
 
@@ -15,13 +18,24 @@ export default {
   name: 'play',
   data () {
     return {
-      board: [
-        ['a1', 'a2', 'a3', 'a4', 'a5'],
-        ['b1', 'b2', 'b3', 'b4', 'b5'],
-        ['c1', 'c2', 'c3', 'c4', 'c5'],
-        ['d1', 'd2', 'd3', 'd4', 'd5'],
-        ['e1', 'e2', 'e3', 'e4', 'e5']
-      ]
+      // localBoard: [
+      //   ['a1', 'a2', 'a3', 'a4', 'a5'],
+      //   ['b1', 'b2', 'b3', 'b4', 'b5'],
+      //   ['c1', 'c2', 'c3', 'c4', 'c5'],
+      //   ['d1', 'd2', 'd3', 'd4', 'd5'],
+      //   ['e1', 'e2', 'e3', 'e4', 'e5']
+      // ]
+    }
+  },
+  computed: {
+    board () {
+      return JSON.parse(this.$store.state.room.board) || null
+    },
+    roomId () {
+      return this.$store.state.room.id
+    },
+    room () {
+      return this.$store.state.room
     }
   },
   methods: {
@@ -32,21 +46,43 @@ export default {
         console.log(`You hit ${event.target.name}`)
       }
     },
-    generateBoard () {
-      const result = []
-      for (let i = 0; i < this.board.length; i++) {
-        const row = this.board[i]
-        for (let j = 0; j < row.length; j++) {
-          const col = row[j]
-          result.push(col)
+    shoot (coordinate) {
+      coordinate = coordinate || [0, 3]
+      console.log(coordinate)
+      const result = this.board[coordinate[0]][coordinate[1]]
+      if (result === 'B') {
+        this.board[coordinate[0]][coordinate[1]] = 'W'
+        console.log('winner')
+        this.$store.dispatch('winner', {
+          user: localStorage.getItem('currentUser'),
+          roomId: this.roomId
+        })
+      } else {
+        const master = this.room.master
+        const member = this.room.member
+        const turn = this.room.turn
+        let updateTurn = null
+        if (master === localStorage.getItem('currentUser')) {
+          if (turn === localStorage('currentUser')) {
+            updateTurn = member
+          } else {
+            updateTurn = master
+          }
+        } else {
+          if (turn === localStorage.getItem('currentUser')) {
+            updateTurn = master
+          } else {
+            updateTurn = member
+          }
         }
+        console.log(updateTurn)
+        this.board[coordinate[0]][coordinate[1]] = '*'
+        this.$store.dispatch('shoot', {
+          roomId: this.roomId,
+          board: JSON.stringify(this.board),
+          turn: updateTurn
+        })
       }
-      return result
-    }
-  },
-  computed: {
-    stateBoard () {
-      return this.$store.state.room.board
     }
   }
 }
