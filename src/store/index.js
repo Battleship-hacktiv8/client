@@ -22,6 +22,9 @@ export default new Vuex.Store({
     SET_WAITING (state) {
       state.waiting = !state.waiting
     },
+    SET_WAITING_FALSE (state) {
+      state.waiting = false
+    },
     SET_ROOM (state, payload) {
       state.room = payload
     }
@@ -136,6 +139,7 @@ export default new Vuex.Store({
     async deleteRoom ({ commit }, payload) {
       const collection = db.collection('battleship').doc(payload)
       await collection.delete()
+      commit('SET_WAITING_FALSE')
     }
   },
   modules: {

@@ -26,6 +26,7 @@
           </div>
         </div>
       </div>
+<<<<<<< HEAD
       <div v-if="$store.state.room.winner" class="position-fixed flex-col justify-content-center align-item-center" id="winner-div">
         <div v-show="$store.state.room.winner == myName" class="message-win">
           <h1>YOU WIN !!</h1>
@@ -37,6 +38,20 @@
         </div>
       </div>
     </div>
+=======
+    </div>
+    <div v-if="$store.state.room.winner" class="position-fixed flex-col justify-content-center align-item-center" id="winner-div">
+      <div v-show="$store.state.room.winner == myName" class="message-win">
+        <h1>YOU WIN !!</h1>
+        <button class="btn btn-primary m-2" @click="deleteRoom">Play Again?</button>
+      </div>
+      <div v-show="$store.state.room.winner != myName" class="message-win">
+        <h1>YOU LOSE</h1>
+        <router-link class="btn btn-primary m-2" to='/room'>Play Again?</router-link>
+      </div>
+    </div>
+    {{board}}
+>>>>>>> add fitur back to room and delete room
   </div>
 </template>
 
@@ -115,7 +130,6 @@ export default {
       // }
     },
     shoot (coordinate) {
-      console.log(this.board)
       const result = this.board[coordinate[0]][coordinate[1]]
       if (result === 'B') {
         this.board[coordinate[0]][coordinate[1]] = 'W'
