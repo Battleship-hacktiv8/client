@@ -77,6 +77,10 @@ export default {
     start () {
       this.$store.commit('SET_WAITING_FALSE')
       this.$router.push('/play')
+    },
+    stopSound () {
+      let audio = new Audio(this.$store.state.themeSong)
+      audio.pause()
     }
   },
   computed: {
@@ -86,6 +90,8 @@ export default {
   },
   created () {
     this.$store.dispatch('fetchRooms')
+    this.$store.state.themeSong.pause()
+    this.$store.state.themeSong.currentTime = 0
   }
 }
 </script>
